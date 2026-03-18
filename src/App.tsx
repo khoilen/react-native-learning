@@ -27,7 +27,7 @@ function AppContent() {
           fontWeight: 'bold',
         }}
       >
-        Text
+        Text android
       </Text>
     </View>
   );
