@@ -1,13 +1,8 @@
-import {
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { StatusBar, Text, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { styles } from './app.style';
 
-function App() {
+const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
@@ -16,29 +11,12 @@ function App() {
       <AppContent />
     </SafeAreaProvider>
   );
-}
+};
 
-function AppContent() {
-  return (
-    <View style={styles.container}>
-      <Text
-        style={{
-          fontSize: 20,
-          fontWeight: 'bold',
-        }}
-      >
-        Text android
-      </Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+const AppContent = () => (
+  <View style={styles.container}>
+    <Text>Text android</Text>
+  </View>
+);
 
 export default App;
