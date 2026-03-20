@@ -1,3 +1,5 @@
+import storybook from 'eslint-plugin-storybook';
+
 import { FlatCompat } from '@eslint/eslintrc';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import importPlugin from 'eslint-plugin-import';
@@ -47,8 +49,17 @@ export default defineConfig([
           message: 'Move StyleSheet.create to a separate .styles.ts file',
         },
       ],
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'TSInterfaceDeclaration[id.name=/Props$/]',
+          message:
+            "Component props should be defined using 'type' instead of 'interface'.",
+        },
+      ],
     },
   },
+
   {
     files: ['**/*.test.{ts,tsx}'],
     rules: {
@@ -101,4 +112,5 @@ export default defineConfig([
       ],
     },
   },
+  ...storybook.configs['flat/recommended'],
 ]);

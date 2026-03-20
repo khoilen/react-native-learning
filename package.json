@@ -8,13 +8,29 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "typecheck": "tsc --pretty --noEmit"
+    "typecheck": "tsc --pretty --noEmit",
+    "storybook-generate": "sb-rn-get-stories",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.84.1",
     "react": "19.2.3",
     "react-native": "0.84.1",
-    "react-native-safe-area-context": "5.5.2"
+    "react-native-safe-area-context": "5.5.2",
+    "babel-loader": "8.4.1",
+    "@react-native-async-storage/async-storage": "3.0.1",
+    "@react-native-community/datetimepicker": "9.1.0",
+    "@react-native-community/slider": "5.1.2",
+    "react-native-reanimated": "4.2.2",
+    "react-native-gesture-handler": "2.30.0",
+    "@gorhom/bottom-sheet": "5.2.8",
+    "react-native-svg": "15.15.4",
+    "@storybook/addon-ondevice-controls": "10.3.0",
+    "@storybook/addon-ondevice-actions": "10.3.0",
+    "@storybook/react-native": "10.3.0",
+    "storybook": "10.3.1",
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@babel/core": "7.25.2",
@@ -42,7 +58,12 @@
     "prettier": "2.8.8",
     "react-test-renderer": "19.2.3",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.57.1"
+    "typescript-eslint": "8.57.1",
+    "storybook": "10.3.1",
+    "@storybook/react-native-web-vite": "10.3.1",
+    "vite": "8.0.1",
+    "react-native-web": "0.21.2",
+    "eslint-plugin-storybook": "10.3.1"
   },
   "engines": {
     "node": ">= 22.11.0"
