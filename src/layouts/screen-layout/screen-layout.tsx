@@ -18,6 +18,7 @@ type ScreenLayoutProps = Omit<BreadcrumbProps, 'style'> & {
   backgroundColor?: string;
   scrollable?: boolean;
   styleBreadcrumb?: BreadcrumbProps['style'];
+  stylesContent?: StyleProp<ViewStyle>;
   stylesWrapper?: StyleProp<ViewStyle>;
 };
 
@@ -27,6 +28,7 @@ export const ScreenLayout = ({
   backgroundColor = theme.colors.background,
   styleBreadcrumb,
   stylesWrapper,
+  stylesContent,
   ...breadcrumbProps
 }: ScreenLayoutProps) => {
   const ContentContainer = scrollable ? ScrollView : View;
@@ -35,7 +37,7 @@ export const ScreenLayout = ({
     <SafeAreaView style={[styles.safeArea, { backgroundColor }, stylesWrapper]}>
       <Breadcrumb style={styleBreadcrumb} {...breadcrumbProps} />
       <ContentContainer
-        style={styles.content}
+        style={[styles.content, stylesContent]}
         contentContainerStyle={scrollable ? styles.scrollContent : undefined}
         showsVerticalScrollIndicator={false}
       >

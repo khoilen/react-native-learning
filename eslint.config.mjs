@@ -53,12 +53,6 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/*.stories.tsx'],
-    rules: {
-      'react-native/no-inline-styles': 'off',
-    },
-  },
-  {
     files: ['**/*.tsx'],
     rules: {
       'no-restricted-syntax': [

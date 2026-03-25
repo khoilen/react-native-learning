@@ -10,13 +10,14 @@ export const styles = StyleSheet.create({
     borderColor: theme.colors.border,
     borderRadius: theme.borderRadius.l,
     paddingHorizontal: theme.spacing.m,
-    backgroundColor: theme.colors.surface,
+    backgroundColor: theme.colors.white,
   },
   container: {
     backgroundColor: theme.colors.background,
     gap: theme.spacing.xs,
   },
   input: {
+    flex: 1,
     paddingHorizontal: theme.spacing.s,
     fontSize: 16,
     height: '100%',
@@ -42,5 +43,9 @@ export const styles = StyleSheet.create({
   },
   rightIcon: {
     marginLeft: 0,
+  },
+  disabled: {
+    backgroundColor: theme.colors.border,
+    color: theme.colors.textLight,
   },
 });

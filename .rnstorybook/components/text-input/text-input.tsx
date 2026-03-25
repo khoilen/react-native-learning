@@ -35,6 +35,7 @@ export const TextInput = forwardRef<TextInputRN, TextInputProps>(
       leftIcon,
       rightIcon,
       inputContainerStyle,
+      editable = true,
       ...props
     },
     ref,
@@ -45,6 +46,7 @@ export const TextInput = forwardRef<TextInputRN, TextInputProps>(
         style={[
           styles.inputContainer,
           !!error && styles.inputError,
+          !editable && styles.disabled,
           inputContainerStyle,
         ]}
       >
@@ -56,6 +58,7 @@ export const TextInput = forwardRef<TextInputRN, TextInputProps>(
           style={[styles.input, style]}
           placeholderTextColor={theme.colors.textLight}
           autoCapitalize="none"
+          editable={editable}
           {...props}
         />
 

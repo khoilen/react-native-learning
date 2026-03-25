@@ -14,7 +14,7 @@ import { useProductsQuery } from '../../hooks/query/use-products-query';
 import { styles } from './styles';
 
 export const Home = () => {
-  const { logout, user } = useAuthStore(state => state);
+  const { user } = useAuthStore(state => state);
   const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
 
   const {
@@ -30,10 +30,6 @@ export const Home = () => {
     navigation.navigate(HomeStackRoutes.ProductDetailScreen, {
       id,
     });
-  };
-
-  const handleLogout = () => {
-    logout();
   };
 
   return (
@@ -88,8 +84,6 @@ export const Home = () => {
           ItemSeparatorComponent={<View style={styles.separator} />}
         />
       )}
-
-      <Button onPress={handleLogout}>Log Out</Button>
     </View>
   );
 };

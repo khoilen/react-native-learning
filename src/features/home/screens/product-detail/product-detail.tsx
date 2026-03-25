@@ -51,7 +51,7 @@ export const ProductDetail = () => {
             <ProductInfo product={product!} />
             <ProductFeatures />
             <ProductDescription description={product?.description!} />
-            <ProductReviews />
+            <ProductReviews productId={id} />
           </ScrollView>
         )}
       </ScreenLayout>
