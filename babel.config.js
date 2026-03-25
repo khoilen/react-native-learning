@@ -1,0 +1,18 @@
+module.exports = {
+  presets: ['module:@react-native/babel-preset'],
+  plugins: [
+    'react-native-worklets/plugin',
+    [
+      'module-resolver',
+      {
+        root: ['./src'],
+        alias: {
+          '@': './src',
+          '@ui-base': './.rnstorybook',
+          '@features': './src/features',
+        },
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    ],
+  ],
+};
