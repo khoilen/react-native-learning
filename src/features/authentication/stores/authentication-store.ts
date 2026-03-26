@@ -1,7 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  clearLocalUser,
+  saveUserLocal,
+} from '@/services/databases/repositories/user-repo';
+import { secureStorage } from '@/services/secure-storage';
+import { User } from '@/types/user';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { User } from '../types/user';
 
 type AuthState = {
   isLoading: boolean;
@@ -19,14 +23,34 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       token: null,
       isLoading: true,
-      setUser: userData => set({ user: userData, isLoading: false }),
-      setToken: (token: string) => set({ token }),
-      logout: () => set({ user: null, token: null }),
-      setLoading: loading => set({ isLoading: loading }),
+      setUser: async (userData: User) => {
+        try {
+          await saveUserLocal(userData);
+          set({ user: userData, isLoading: false });
+        } catch (error) {
+          console.error('Failed to save user to SQLite:', error);
+          throw error;
+        }
+      },
+      setToken: async (token: string) => {
+        set({ token });
+      },
+      logout: async () => {
+        try {
+          await clearLocalUser();
+          set({ user: null, token: null });
+        } catch (error) {
+          throw error
+        }
+      },
+      setLoading: isLoading => set({ isLoading }),
     }),
     {
       name: 'auth-storage',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => secureStorage),
+      onRehydrateStorage: state => () => {
+        state?.setLoading(false);
+      },
     },
   ),
 );

@@ -6,4 +6,5 @@ export type User = {
   password: string;
   role: string;
   username: string;
+  id?: number;
 };

@@ -29,6 +29,6 @@ export const styles = StyleSheet.create({
     gap: 10,
   },
   saveButton: {
-    paddingInline: 15
-  }
+    paddingInline: 15,
+  },
 });

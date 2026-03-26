@@ -5,7 +5,7 @@ import {
 import { Text } from '@ui-base/components/text/text';
 import { FieldValues } from 'react-hook-form';
 import { View } from 'react-native';
-import { FormValues } from '../account-details';
+import { FormValues } from '../../account-details';
 import { styles } from './styles';
 
 export type FieldProps = Pick<ControlledInputProps<FieldValues>, 'rules'> & {

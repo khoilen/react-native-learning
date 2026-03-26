@@ -1,21 +1,25 @@
 import { useAuthStore } from '@/features/authentication/stores/authentication-store';
-import { User } from '@/features/authentication/types/user';
+import { useUpdateUserMutation } from '@/features/profile/hooks/mutation/use-user-mutation';
+import { User } from '@/types/user';
 import { Button } from '@ui-base/components/button/button';
 import { Text } from '@ui-base/components/text/text';
 import React, { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Alert, TouchableOpacity, View } from 'react-native';
-import { Field } from './field/field';
+import Toast from 'react-native-toast-message';
 import { styles } from './styles';
+import { UserForm } from './user-form/user-form';
 
 export type FormValues = Pick<User, 'firstName' | 'lastName' | 'email'> & {
   age: string;
 };
 
 export const AccountDetailsCard = () => {
-  const { user } = useAuthStore(state => state);
+  const { user, setUser: setUserLocal } = useAuthStore(state => state);
   const [isEditing, setIsEditing] = useState(false);
+  const { mutateAsync: updateUserSync, isPending } = useUpdateUserMutation();
   const methods = useForm<FormValues>({
+    mode: 'onBlur',
     defaultValues: {
       age: user?.age.toString(),
       firstName: user?.firstName,
@@ -64,8 +68,35 @@ export const AccountDetailsCard = () => {
     }
   };
 
-  const saveProfile = (data: FormValues) => {
-    console.log(data);
+  const saveProfile = async ({ age, firstName, lastName }: FormValues) => {
+    try {
+      await setUserLocal({
+        ...user,
+        age: Number(age),
+        firstName,
+        lastName,
+      });
+
+      await updateUserSync({
+        age: Number(age),
+        firstName,
+        lastName,
+      });
+
+      setIsEditing(false);
+
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Profile updated',
+      });
+    } catch {
+      Toast.show({
+        type: 'error',
+        text1: 'Sync Issue',
+        text2: 'Saved locally, but could not sync to server.',
+      });
+    }
   };
 
   return (
@@ -77,6 +108,7 @@ export const AccountDetailsCard = () => {
             <Button
               styleInner={styles.saveButton}
               onPress={handleSubmit(saveProfile)}
+              disabled={isPending}
             >
               Save
             </Button>
@@ -84,6 +116,7 @@ export const AccountDetailsCard = () => {
               styleInner={styles.saveButton}
               variant="outline-gray"
               onPress={toggleEdit}
+              disabled={isPending}
             >
               Cancel
             </Button>
@@ -94,44 +127,7 @@ export const AccountDetailsCard = () => {
           </TouchableOpacity>
         )}
       </View>
-      <FormProvider {...methods}>
-        <Field
-          label="Email Address"
-          fieldName="email"
-          value={user?.email}
-          isInput={isEditing}
-          isEditable={false}
-        />
-        <Field
-          label="First name"
-          fieldName="firstName"
-          value={user.firstName}
-          isInput={isEditing}
-          rules={{
-            required: 'First name is required',
-          }}
-        />
-        <Field
-          label="Last Name"
-          fieldName="lastName"
-          value={user.lastName}
-          isInput={isEditing}
-          rules={{ required: 'Last Name is required' }}
-        />
-        <Field
-          label="Age"
-          fieldName="age"
-          value={user.age.toString()}
-          isInput={isEditing}
-          rules={{
-            required: 'Age is required',
-            pattern: {
-              value: /^[0-9]+$/,
-              message: 'Please enter a valid number',
-            },
-          }}
-        />
-      </FormProvider>
+      <UserForm user={user} isEditing={isEditing} methods={methods} />
     </View>
   );
 };

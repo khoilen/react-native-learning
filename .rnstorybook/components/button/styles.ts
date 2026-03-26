@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     borderRadius: theme.borderRadius.l,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 20
+    minHeight: 20,
   },
   buttonText: {
     fontWeight: '700',
@@ -58,7 +58,6 @@ export const styles = StyleSheet.create({
   largeText: { fontSize: 16 },
   fullWidth: { width: '100%' },
   disabled: {
-    backgroundColor: theme.colors.disabled,
     opacity: 0.5,
   },
   icon: {
@@ -75,5 +74,8 @@ export const styles = StyleSheet.create({
   },
   tertiaryText: {
     color: theme.colors.textSecondary,
+  },
+  loading: {
+    marginRight: 5,
   },
 });

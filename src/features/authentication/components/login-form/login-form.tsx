@@ -28,15 +28,24 @@ export type FormValues = {
 export const LoginForm = () => {
   const { setUser, setToken } = useAuthStore(state => state);
 
-  const handleSuccess = (response: LoginResponse) => {
+  const handleSuccess = async (response: LoginResponse) => {
     const { user, token } = response.data;
-    setUser(user);
-    setToken(token);
-    Toast.show({
-      type: 'success',
-      text1: 'Login Success',
-      text2: `Welcome back, ${user.username}!`,
-    });
+    try {
+      await setUser(user);
+      await setToken(token);
+      Toast.show({
+        type: 'success',
+        text1: 'Login Success',
+        text2: `Welcome back ${user.lastName} ${user.firstName}`,
+      });
+    } catch {
+      Toast.show({
+        type: 'error',
+        text1: 'Login Error',
+        text2:
+          'Something went wrong while logging you in. Please check your connection and try again.',
+      });
+    }
   };
 
   const handleError = () => {
@@ -90,7 +99,7 @@ export const LoginForm = () => {
             isFullWidth
             disabled={isPending}
           >
-            Sing in
+            Sign in
           </Button>
           <Button
             onPress={handleSubmit(onSubmit)}

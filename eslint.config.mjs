@@ -36,55 +36,9 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/**/*.[jt]s?(x)', '**/*.(test|spec).[jt]s?(x)'],
-    ...compat.extends('plugin:testing-library/react')[0],
-  },
-  {
-    files: ['**/*.tsx'],
-    rules: {
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: 'TSInterfaceDeclaration[id.name=/Props$/]',
-          message:
-            "Component props should be defined using 'type' instead of 'interface'.",
-        },
-      ],
-    },
-  },
-  {
-    files: ['**/*.tsx'],
-    rules: {
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector:
-            "CallExpression[callee.object.name='StyleSheet'][callee.property.name='create']",
-          message: 'Move StyleSheet.create to a separate .styles.ts file',
-        },
-      ],
-    },
-  },
-  {
-    files: ['**/*.test.{ts,tsx}'],
-    rules: {
-      'no-useless-escape': 'off',
-      'no-restricted-syntax': [
-        'warn',
-        {
-          selector:
-            'Program:not(:has(FunctionDeclaration[id.name="setup"], VariableDeclarator[id.name="setup"][init.type=/FunctionExpression$/]))',
-          message: "Test files must include a 'setup' function.",
-        },
-      ],
-    },
-  },
-
-  {
     plugins: {
       'typescript-sort-keys': tsSortKeys,
       import: importPlugin,
-      '@typescript-eslint': tsPlugin,
       'no-barrel-files': noBarrelFiles,
       'check-file': checkFile,
     },
@@ -131,6 +85,61 @@ export default defineConfig([
         {
           'src/**/': 'KEBAB_CASE',
           '.rnstorybook/**/': 'KEBAB_CASE',
+        },
+      ],
+    },
+  },
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    plugins: {
+      '@typescript-eslint': tsPlugin,
+    },
+    rules: {
+      'no-use-before-define': 'off',
+      '@typescript-eslint/no-use-before-define': 'off',
+    },
+  },
+
+  {
+    files: ['**/**/*.[jt]s?(x)', '**/*.(test|spec).[jt]s?(x)'],
+    ...compat.extends('plugin:testing-library/react')[0],
+  },
+  {
+    files: ['**/*.tsx'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'TSInterfaceDeclaration[id.name=/Props$/]',
+          message:
+            "Component props should be defined using 'type' instead of 'interface'.",
+        },
+      ],
+    },
+  },
+  {
+    files: ['**/*.tsx'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector:
+            "CallExpression[callee.object.name='StyleSheet'][callee.property.name='create']",
+          message: 'Move StyleSheet.create to a separate .styles.ts file',
+        },
+      ],
+    },
+  },
+  {
+    files: ['**/*.test.{ts,tsx}'],
+    rules: {
+      'no-useless-escape': 'off',
+      'no-restricted-syntax': [
+        'warn',
+        {
+          selector:
+            'Program:not(:has(FunctionDeclaration[id.name="setup"], VariableDeclarator[id.name="setup"][init.type=/FunctionExpression$/]))',
+          message: "Test files must include a 'setup' function.",
         },
       ],
     },

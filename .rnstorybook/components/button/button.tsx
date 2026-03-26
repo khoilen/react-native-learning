@@ -7,6 +7,7 @@ export type ButtonProps = TouchableOpacityProps & {
   children: ReactNode;
   backgroundColor?: string;
   isFullWidth?: boolean;
+  isLoading?: boolean;
   isOutline?: boolean;
   onPress?: () => void;
   size?: 'small' | 'medium' | 'large';
