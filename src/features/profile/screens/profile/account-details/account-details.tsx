@@ -93,8 +93,8 @@ export const AccountDetailsCard = () => {
     } catch {
       Toast.show({
         type: 'error',
-        text1: 'Sync Issue',
-        text2: 'Saved locally, but could not sync to server.',
+        text1: 'Update error',
+        text2: 'Please check your network and try again',
       });
     }
   };

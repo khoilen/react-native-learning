@@ -1,3 +1,4 @@
+import { formatPrice } from '@/utils/format-price';
 import { Button } from '@ui-base/components/button/button';
 import { Card, type CardProps } from '@ui-base/components/card/card';
 import { Text } from '@ui-base/components/text/text';
@@ -29,7 +30,7 @@ export const ProductCard = ({
     footer={
       <View style={styles.footer}>
         <Text variant="body" style={styles.price}>
-          {price}
+          {formatPrice(Number(price))}
         </Text>
         <Button
           activeOpacity={0.8}
