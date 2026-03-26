@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
-import { Checkbox } from './checkbox';
+import { Checkbox, CheckboxProps } from './checkbox';
 
 const mockOnValueChange = jest.fn();
 
@@ -8,7 +8,7 @@ const defaultProps = {
   onValueChange: mockOnValueChange,
 };
 
-const setup = (props = {}) => {
+const setup = (props?: Partial<CheckboxProps>) => {
   render(<Checkbox {...defaultProps} {...props} />);
 };
 

@@ -7,7 +7,7 @@ import CarouselRn, {
 import { theme } from '../../theme/theme';
 import { styles } from './styles';
 
-type CarouselProps = {
+export type CarouselProps = {
   data: string[];
   height?: number;
   showDots?: boolean;
@@ -62,6 +62,7 @@ export const Carousel = ({
         <View style={styles.paginationContainer}>
           {data.map((_, i) => (
             <Pressable
+              accessibilityRole="button"
               key={i}
               onPress={() => scrollToIndex(i)}
               style={[

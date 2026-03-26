@@ -1,5 +1,12 @@
 import { Check } from 'lucide-react-native';
-import { Pressable, StyleProp, Text, TextStyle, View, ViewStyle } from 'react-native';
+import {
+  Pressable,
+  StyleProp,
+  Text,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { styles } from './styles';
 
 export type CheckboxProps = {
@@ -17,11 +24,14 @@ export const Checkbox = ({
   disabled = false,
   style,
   label,
-  labelStyle
+  labelStyle,
+  ...restProps
 }: CheckboxProps) => (
   <Pressable
+    {...restProps}
     accessibilityRole="checkbox"
-    accessibilityState={{ checked: value, disabled }}
+    accessibilityValue={{ text: value ? 'checked' : 'unchecked' }}
+    accessibilityState={{ checked: !!value, disabled }}
     onPress={() => !disabled && onValueChange(!value)}
     style={[styles.container, disabled && styles.disabled, style]}
   >
@@ -30,11 +40,7 @@ export const Checkbox = ({
     </View>
     {label && (
       <Text
-        style={[
-          styles.label,
-          disabled && styles.disabledLabel,
-          labelStyle,
-        ]}
+        style={[styles.label, disabled && styles.disabledLabel, labelStyle]}
       >
         {label}
       </Text>

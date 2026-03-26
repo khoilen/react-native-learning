@@ -19,9 +19,14 @@ const TAB_CONFIG = [
   { name: 'Profile', component: ProfileStack, icon: User },
 ];
 
-export const MainTabs = () => (
+type MainTabsProps = {
+  testIdBottomBar?: string;
+};
+
+export const MainTabs = ({ testIdBottomBar }: MainTabsProps) => (
   <BottomTabs
     tabs={TAB_CONFIG}
+    testIdBottomBar={testIdBottomBar}
     screenOptions={({ route }) => {
       const routeName = getFocusedRouteNameFromRoute(route) ?? route.name;
       const shouldHide = HIDDEN_ROUTES.includes(routeName as HomeStackRoutes);

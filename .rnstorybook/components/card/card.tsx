@@ -43,6 +43,7 @@ export const Card = ({
             activeOpacity={0.7}
             style={styles.favoriteBtn}
             onPress={onFavoritePress}
+            accessibilityRole="button"
           >
             <Heart size={18} color={theme.colors.text} fill="none" />
           </TouchableOpacity>

@@ -59,6 +59,7 @@ export const TextInput = forwardRef<TextInputRN, TextInputProps>(
           placeholderTextColor={theme.colors.textLight}
           autoCapitalize="none"
           editable={editable}
+          accessibilityLabel={label}
           {...props}
         />
 

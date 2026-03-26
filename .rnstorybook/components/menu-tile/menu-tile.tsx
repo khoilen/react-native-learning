@@ -25,6 +25,7 @@ export const MenuTile = ({
 }: MenuTileProps) => (
   <Pressable
     onPress={onPress}
+    accessibilityRole="button"
     style={({ pressed }) => [
       styles.container,
       stylesWrapper,
