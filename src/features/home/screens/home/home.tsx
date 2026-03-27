@@ -11,13 +11,20 @@ import { TextInput } from '@ui-base/components/text-input/text-input';
 import { Text } from '@ui-base/components/text/text';
 import { theme } from '@ui-base/theme/theme';
 import { Bell, Search, ShoppingCart } from 'lucide-react-native';
-import { FlatList, View } from 'react-native';
+import { useState } from 'react';
+import {
+  FlatList,
+  NativeSyntheticEvent,
+  TextInputSubmitEditingEventData,
+  View,
+} from 'react-native';
 import { useProductsQuery } from '../../hooks/query/use-products-query';
 import { styles } from './styles';
 
 export const Home = () => {
   const { user } = useAuthStore(state => state);
   const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const { toggleFavorite, isFavorite } = useFavoritesStore(state => state);
 
   const {
@@ -25,7 +32,7 @@ export const Home = () => {
     isLoading: isLoadingProducts,
     isFetching,
     refetch,
-  } = useProductsQuery({
+  } = useProductsQuery(searchTerm, {
     enabled: !!user,
   });
 
@@ -37,6 +44,12 @@ export const Home = () => {
 
   const handleFavorite = (product: Product) => {
     toggleFavorite(product);
+  };
+
+  const handleSearchSubmit = (
+    event: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
+  ) => {
+    setSearchTerm(event.nativeEvent.text);
   };
 
   return (
@@ -58,6 +71,10 @@ export const Home = () => {
         inputContainerStyle={{
           backgroundColor: theme.colors.backgroundMuted,
         }}
+        multiline={false}
+        blurOnSubmit={true}
+        returnKeyType="search"
+        onSubmitEditing={handleSearchSubmit}
       />
       <View style={styles.categories}>
         <Button>All items</Button>

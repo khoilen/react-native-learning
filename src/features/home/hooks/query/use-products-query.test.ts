@@ -38,7 +38,7 @@ const setup = (options?: Partial<SetupOptions>) => {
     (getProductsRequest as jest.Mock).mockResolvedValue(mockResponse);
   }
 
-  return renderHook(() => useProductsQuery(), {
+  return renderHook(() => useProductsQuery(''), {
     wrapper: createWrapper(),
   });
 };
@@ -67,7 +67,7 @@ describe('useProductsQuery', () => {
   });
 
   it('respects additional query options', () => {
-    renderHook(() => useProductsQuery({ enabled: false }), {
+    renderHook(() => useProductsQuery('', { enabled: false }), {
       wrapper: createWrapper(),
     });
 

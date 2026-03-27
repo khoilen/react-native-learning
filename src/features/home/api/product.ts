@@ -6,8 +6,13 @@ export type ProductResponse = {
   status: boolean;
 };
 
-export const getProductsRequest = async () => {
-  const { data } = await http.get<ProductResponse>('/product');
+export const getProductsRequest = async (searchTerm?: string) => {
+  const params = searchTerm ?? {
+    params: { name: searchTerm },
+  };
+  const { data } = await http.get<ProductResponse>('/product', {
+    params,
+  });
   return data;
 };
 
