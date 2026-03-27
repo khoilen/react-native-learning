@@ -4,7 +4,7 @@ import { LucideIcon } from 'lucide-react-native';
 import { View } from 'react-native';
 import { styles } from './styles';
 
-type FeatureItemProps = {
+export type FeatureItemProps = {
   Icon: LucideIcon;
   label: string;
   value: string;

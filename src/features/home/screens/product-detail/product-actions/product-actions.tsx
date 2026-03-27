@@ -10,7 +10,7 @@ export const ProductActions = () => {
   const bottomPadding = insets.bottom > 0 ? insets.bottom : theme.spacing.m;
 
   return (
-    <View style={styles.fixedWrapper}>
+    <View testID="product-actions-container" style={styles.fixedWrapper}>
       <View style={[styles.container, { paddingBottom: bottomPadding }]}>
         <Button isOutline size="large" style={styles.button} onPress={() => {}}>
           Add to Cart

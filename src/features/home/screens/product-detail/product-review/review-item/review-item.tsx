@@ -3,7 +3,7 @@ import { theme } from '@ui-base/theme/theme';
 import { Image, View } from 'react-native';
 import { styles } from './styles';
 
-type ReviewItemProps = {
+export type ReviewItemProps = {
   avatar: string;
   comment: string;
   date: string;

@@ -2,11 +2,15 @@ import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { LoginParams, loginRequest, LoginResponse } from '../../api/login';
 
-export const useLoginMutation = (
-  options?: UseMutationOptions<LoginResponse, AxiosError, LoginParams>,
-) =>
+export type UseLoginMutationOptions = UseMutationOptions<
+  LoginResponse,
+  AxiosError,
+  LoginParams
+>;
+
+export const useLoginMutation = (options?: UseLoginMutationOptions) =>
   useMutation({
     mutationKey: ['login'],
-    mutationFn: loginRequest,
+    mutationFn: (variables: LoginParams) => loginRequest(variables),
     ...options,
   });

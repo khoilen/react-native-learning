@@ -7,7 +7,10 @@ import { Plus } from 'lucide-react-native';
 import { View } from 'react-native';
 import { styles } from './styles';
 
-type ProductCard = Omit<CardProps, 'title' | 'caption' | 'footer'> & {
+export type ProductCardProps = Omit<
+  CardProps,
+  'title' | 'caption' | 'footer'
+> & {
   category: string;
   price: string;
   title: string;
@@ -21,7 +24,7 @@ export const ProductCard = ({
   onAddPress,
   price,
   ...restProps
-}: ProductCard) => (
+}: ProductCardProps) => (
   <Card
     {...restProps}
     imageSource={imageSource}

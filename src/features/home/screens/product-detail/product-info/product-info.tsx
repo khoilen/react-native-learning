@@ -5,7 +5,7 @@ import { Heart } from 'lucide-react-native';
 import { View } from 'react-native'; // Import from react-native, not lucide
 import { styles } from './styles';
 
-type ProductInfoProps = {
+export type ProductInfoProps = {
   product: Product;
 };
 

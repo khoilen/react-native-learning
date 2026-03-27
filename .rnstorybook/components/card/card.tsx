@@ -20,6 +20,7 @@ export type CardProps = {
   onFavoritePress?: () => void;
   onPressCard?: () => void;
   style?: StyleProp<ViewStyle>;
+  testId?: string;
 };
 
 export const Card = ({
@@ -30,12 +31,13 @@ export const Card = ({
   onFavoritePress,
   onPressCard,
   style,
+  testId,
 }: CardProps) => {
   const resolvedSource =
     typeof imageSource === 'string' ? { uri: imageSource } : imageSource;
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, style]} testID={testId}>
       <TouchableOpacity onPress={onPressCard}>
         <View style={styles.imageWrapper}>
           <Image source={resolvedSource} style={styles.image} />

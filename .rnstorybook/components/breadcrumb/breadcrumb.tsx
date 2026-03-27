@@ -35,6 +35,7 @@ export const Breadcrumb = ({
           variant="icon"
           onPress={handleBack}
           styleInner={styles.backButton}
+          accessibilityRole="button"
         >
           <ChevronLeft size={24} color={theme.colors.text} />
         </Button>
