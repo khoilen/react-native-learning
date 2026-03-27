@@ -1,24 +1,17 @@
 import { useAuthStore } from '@/features/authentication/stores/authentication-store';
 import { useFavoritesStore } from '@/features/saved/stores/use-favorites-store';
-import { mockProduct } from '@/tests/mocks/product';
+import { createWrapper } from '@/tests/test-utils';
+import { Product } from '@/types/product';
 import { useNavigation } from '@react-navigation/native';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react-native';
 import React from 'react';
 import { useProductsQuery } from '../../hooks/query/use-products-query';
 import { Home } from './home';
-
-const mockNavigate = jest.fn();
-const mockToggleFavorite = jest.fn();
-const mockIsFavorite = jest.fn();
-const mockRefetch = jest.fn();
-
-jest.mock('lucide-react-native', () => ({
-  Plus: () => null,
-  Heart: () => null,
-  Bell: () => null,
-  Search: () => null,
-  ShoppingCart: () => null,
-}));
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: jest.fn(),
@@ -36,19 +29,12 @@ jest.mock('../../hooks/query/use-products-query', () => ({
   useProductsQuery: jest.fn(),
 }));
 
-jest.mock('react-native-safe-area-context', () => ({
-  useSafeAreaInsets: jest.fn(() => ({ top: 0, bottom: 0, left: 0, right: 0 })),
-}));
 jest.mock('lucide-react-native', () => ({
+  Plus: () => null,
+  Heart: () => null,
   Bell: () => null,
   Search: () => null,
   ShoppingCart: () => null,
-  Plus: () => null,
-  Heart: () => null,
-}));
-
-jest.mock('react-native-safe-area-context', () => ({
-  useSafeAreaInsets: jest.fn(() => ({ top: 0, bottom: 0, left: 0, right: 0 })),
 }));
 
 jest.mock('@/components/loading/loading', () => {
@@ -57,9 +43,34 @@ jest.mock('@/components/loading/loading', () => {
     Loading: () => <View testID="loading-spinner" />,
   };
 });
-const MOCK_PRODUCTS = [mockProduct];
 
-const setup = (products = MOCK_PRODUCTS, isLoading = false) => {
+const MOCK_PRODUCT: Product = {
+  id: 1,
+  name: 'Product 1',
+  price: 100,
+  description: 'Category 1',
+  image: 'img1.jpg',
+  priceUnit: 'dollar',
+};
+
+const mockNavigate = jest.fn();
+const mockToggleFavorite = jest.fn();
+const mockIsFavorite = jest.fn();
+const mockRefetch = jest.fn();
+
+type SetupOptions = {
+  isLoading?: boolean;
+  products?: Product[];
+};
+
+const defaultOptions: SetupOptions = {
+  products: [MOCK_PRODUCT],
+  isLoading: false,
+};
+
+const setup = (options?: Partial<SetupOptions>) => {
+  const { products, isLoading } = { ...defaultOptions, ...options };
+
   (useNavigation as jest.Mock).mockReturnValue({
     navigate: mockNavigate,
   });
@@ -80,7 +91,7 @@ const setup = (products = MOCK_PRODUCTS, isLoading = false) => {
     refetch: mockRefetch,
   });
 
-  return render(<Home />);
+  return render(<Home />, { wrapper: createWrapper() });
 };
 
 describe('Home Screen', () => {
@@ -88,14 +99,17 @@ describe('Home Screen', () => {
     jest.clearAllMocks();
   });
 
-  it('renders correctly and shows products', () => {
+  it('renders correctly and shows products', async () => {
     setup();
     expect(screen.getByText('Discover')).toBeTruthy();
-    expect(screen.getByText('Product 1')).toBeTruthy();
+
+    await waitFor(() => {
+      expect(screen.getByText(MOCK_PRODUCT.name)).toBeTruthy();
+    });
   });
 
   it('shows loading spinner when fetching data', () => {
-    setup(null, true);
+    setup({ isLoading: true, products: undefined });
     expect(screen.getByTestId('loading-spinner')).toBeTruthy();
   });
 
@@ -110,30 +124,24 @@ describe('Home Screen', () => {
     expect(useProductsQuery).toHaveBeenCalledWith('shoes', expect.anything());
   });
 
-  it('navigates to product detail when a card is pressed', () => {
+  it('navigates to product detail when a card is pressed', async () => {
     setup();
 
-    fireEvent.press(screen.getByText('Product 1'));
+    const productTitle = await screen.findByText(MOCK_PRODUCT.name);
+    fireEvent.press(productTitle);
 
     expect(mockNavigate).toHaveBeenCalledWith('ProductDetail', {
-      id: 1,
+      id: MOCK_PRODUCT.id,
     });
   });
 
-  it('toggles favorite when heart icon is pressed', () => {
+  it('toggles favorite when heart icon is pressed', async () => {
     setup();
 
-    const buttons = screen.getAllByRole('button');
+    const buttons = await screen.findAllByRole('button');
 
-    const favButton =
-      buttons.find(b =>
-        b.parent?.props?.style?.some?.(
-          (s: any) => s?.backgroundColor === undefined,
-        ),
-      ) || buttons[5];
+    fireEvent.press(buttons[5]);
 
-    fireEvent.press(favButton);
-
-    expect(mockToggleFavorite).toHaveBeenCalledWith(MOCK_PRODUCTS[0]);
+    expect(mockToggleFavorite).toHaveBeenCalledWith(MOCK_PRODUCT);
   });
 });
