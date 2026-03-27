@@ -49,7 +49,7 @@ describe('Product Requests', () => {
       const result = await getProductsRequest();
 
       expect(http.get).toHaveBeenCalledWith('/product', {
-        params: { name: undefined },
+        params: { params: { name: undefined } },
       });
       expect(result).toEqual(MOCK_PRODUCTS_RESPONSE);
     });
