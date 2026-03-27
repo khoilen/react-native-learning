@@ -1,6 +1,6 @@
+import { ProductReview } from '@/types/product';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { getProductReviews, ProductReviewResponse } from '../../api/product';
-import { ProductReview } from '../../types/product';
 
 type UseProductReviewsOptions = UseQueryOptions<
   ProductReviewResponse,

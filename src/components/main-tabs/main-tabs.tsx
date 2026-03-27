@@ -1,21 +1,27 @@
-import { HomeStack } from '@/navigation/stack-navigators/home-stack/home-stack';
+import {
+  HomeStack,
+  HomeStackParamList,
+} from '@/navigation/stack-navigators/home-stack/home-stack';
 import { HomeStackRoutes } from '@/navigation/stack-navigators/home-stack/home-stack-routes';
 import { ProfileStack } from '@/navigation/stack-navigators/profile-stack/profile-stack';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { SavedStack } from '@/navigation/stack-navigators/saved-stack/saved-stack';
+import {
+  getFocusedRouteNameFromRoute,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
 import { BottomTabs } from '@ui-base/components/bottom-tabs/bottom-tabs';
-import { Heart, LayoutGrid, ShoppingBag, User } from 'lucide-react-native';
-import { Placeholder } from '../placeholder/placeholde';
+import { Heart, ShoppingBag, User } from 'lucide-react-native';
 
+export type MainTabsParamList = {
+  Profile: undefined;
+  Saved: undefined;
+  Shop: NavigatorScreenParams<HomeStackParamList>;
+};
 const HIDDEN_ROUTES = [HomeStackRoutes.ProductDetailScreen];
 
 const TAB_CONFIG = [
   { name: 'Shop', component: HomeStack, icon: ShoppingBag },
-  {
-    name: 'Categories',
-    component: () => <Placeholder name="Categories" />,
-    icon: LayoutGrid,
-  },
-  { name: 'Saved', component: () => <Placeholder name="Saved" />, icon: Heart },
+  { name: 'Saved', component: SavedStack, icon: Heart },
   { name: 'Profile', component: ProfileStack, icon: User },
 ];
 

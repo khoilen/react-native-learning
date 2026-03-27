@@ -1,5 +1,5 @@
 import { http } from '@/services/http';
-import { Product, ProductReview } from '../types/product';
+import { Product, ProductReview } from '@/types/product';
 
 export type ProductResponse = {
   data: Product[];

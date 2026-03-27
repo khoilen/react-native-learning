@@ -1,4 +1,5 @@
 import { createWrapper } from '@/tests/test-utils';
+import { Product } from '@/types/product';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   fireEvent,
@@ -6,24 +7,12 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react-native';
-import { ReactNode } from 'react';
 import { useProductDetailQuery } from '../../hooks/query/use-products-detail-query';
-import { Product } from '../../types/product';
 import { ProductDetail } from './product-detail';
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: jest.fn(),
   useRoute: jest.fn(),
-}));
-
-jest.mock('react-native-safe-area-context', () => ({
-  useSafeAreaInsets: jest.fn(() => ({
-    bottom: 0,
-    top: 0,
-    left: 0,
-    right: 0,
-  })),
-  SafeAreaProvider: ({ children }: { children: ReactNode }) => children,
 }));
 
 jest.mock('../../hooks/query/use-products-detail-query', () => ({

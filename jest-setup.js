@@ -1,5 +1,6 @@
 import { jest } from '@jest/globals';
 import 'react-native-gesture-handler/jestSetup';
+import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
 
 jest.mock('react-native-worklets', () =>
   require('react-native-worklets/src/mock'),
@@ -31,3 +32,18 @@ jest.mock('react-native-gesture-handler', () => {
     },
   };
 });
+
+jest.mock('@react-native-async-storage/async-storage', () => ({
+  setItem: jest.fn(() => Promise.resolve()),
+  getItem: jest.fn(() => Promise.resolve(null)),
+  removeItem: jest.fn(() => Promise.resolve()),
+  clear: jest.fn(() => Promise.resolve()),
+  getAllKeys: jest.fn(() => Promise.resolve([])),
+  multiGet: jest.fn(() => Promise.resolve([])),
+  multiSet: jest.fn(() => Promise.resolve()),
+  multiRemove: jest.fn(() => Promise.resolve()),
+  multiMerge: jest.fn(() => Promise.resolve()),
+  mergeItem: jest.fn(() => Promise.resolve()),
+}));
+
+jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);

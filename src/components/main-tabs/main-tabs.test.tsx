@@ -61,7 +61,6 @@ describe('MainTabs', () => {
     setup();
 
     expect(screen.getByText('Shop')).toBeOnTheScreen();
-    expect(screen.getByText('Categories')).toBeOnTheScreen();
     expect(screen.getByText('Saved')).toBeOnTheScreen();
     expect(screen.getByText('Profile')).toBeOnTheScreen();
   });
@@ -77,7 +76,7 @@ describe('MainTabs', () => {
     setup();
 
     const tabs = screen.getAllByRole('button');
-    expect(tabs.length).toBe(4);
+    expect(tabs.length).toBe(3);
   });
 
   it('hides the tab bar when on a hidden route ProductDetailScreen', async () => {

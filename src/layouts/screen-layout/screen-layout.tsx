@@ -13,13 +13,14 @@ import {
 } from 'react-native';
 import { styles } from './styles';
 
-type ScreenLayoutProps = Omit<BreadcrumbProps, 'style'> & {
+type ScreenLayoutProps = Omit<BreadcrumbProps, 'style' | 'title'> & {
   children: ReactNode;
   backgroundColor?: string;
   scrollable?: boolean;
   styleBreadcrumb?: BreadcrumbProps['style'];
   stylesContent?: StyleProp<ViewStyle>;
   stylesWrapper?: StyleProp<ViewStyle>;
+  title?: string;
 };
 
 export const ScreenLayout = ({
@@ -29,13 +30,20 @@ export const ScreenLayout = ({
   styleBreadcrumb,
   stylesWrapper,
   stylesContent,
+  title,
   ...breadcrumbProps
 }: ScreenLayoutProps) => {
   const ContentContainer = scrollable ? ScrollView : View;
 
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor }, stylesWrapper]}>
-      <Breadcrumb style={styleBreadcrumb} {...breadcrumbProps} />
+      {title && (
+        <Breadcrumb
+          style={styleBreadcrumb}
+          title={title}
+          {...breadcrumbProps}
+        />
+      )}
       <ContentContainer
         style={[styles.content, stylesContent]}
         contentContainerStyle={scrollable ? styles.scrollContent : undefined}

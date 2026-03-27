@@ -49,7 +49,7 @@ describe('ProductCard', () => {
     setup();
 
     const buttons = screen.getAllByRole('button');
-    const addButton = buttons[1];
+    const addButton = buttons[0];
 
     fireEvent.press(addButton);
 

@@ -1,8 +1,10 @@
 import { Loading } from '@/components/loading/loading';
 import { ProductCard } from '@/components/product-card/product-card';
 import { useAuthStore } from '@/features/authentication/stores/authentication-store';
+import { useFavoritesStore } from '@/features/saved/stores/use-favorites-store';
 import { HomeStackParamList } from '@/navigation/stack-navigators/home-stack/home-stack';
 import { HomeStackRoutes } from '@/navigation/stack-navigators/home-stack/home-stack-routes';
+import { Product } from '@/types/product';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Button } from '@ui-base/components/button/button';
 import { TextInput } from '@ui-base/components/text-input/text-input';
@@ -16,6 +18,7 @@ import { styles } from './styles';
 export const Home = () => {
   const { user } = useAuthStore(state => state);
   const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+  const { toggleFavorite, isFavorite } = useFavoritesStore(state => state);
 
   const {
     data: products,
@@ -30,6 +33,10 @@ export const Home = () => {
     navigation.navigate(HomeStackRoutes.ProductDetailScreen, {
       id,
     });
+  };
+
+  const handleFavorite = (product: Product) => {
+    toggleFavorite(product);
   };
 
   return (
@@ -74,6 +81,8 @@ export const Home = () => {
               imageSource={item.image}
               price={String(item.price)}
               onPressCard={() => handleProductPress(item.id)}
+              onFavoritePress={() => handleFavorite(item)}
+              isFavorite={isFavorite(item.id)}
               style={styles.card}
             />
           )}

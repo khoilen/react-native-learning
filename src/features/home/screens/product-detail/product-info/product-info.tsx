@@ -1,4 +1,4 @@
-import { Product } from '@/features/home/types/product';
+import { Product } from '@/types/product';
 import { Text } from '@ui-base/components/text/text';
 import { theme } from '@ui-base/theme/theme';
 import { Heart } from 'lucide-react-native';
